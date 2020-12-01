@@ -10,7 +10,7 @@
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Create League</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Create Patient</h1>
                   </div>
                   <form class="user" @submit="formSubmit">
                     <p v-if="errors.length">
@@ -20,7 +20,13 @@
                       </ul>
                     </p>
                     <div class="form-group">
-                      <input type="text" class="form-control form-control-user" v-model="name" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter League Name">
+                      <input type="text" class="form-control form-control-user" v-model="name" aria-describedby="emailHelp" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" v-model="surname" aria-describedby="emailHelp" placeholder="Enter surname">
+                    </div>
+                    <div class="form-group">
+                      <input type="date" class="form-control form-control-user" v-model="birthDate" aria-describedby="emailHelp" placeholder="Enter birthdate">
                     </div>
                     <button class="btn btn-primary btn-user btn-block">Create</button>
                   </form>
@@ -52,6 +58,8 @@ export default {
   data() {
     return {
       name: "",
+      surname: "",
+      birthDate: "",
       output: "",
       errors: []
     };
@@ -68,9 +76,14 @@ export default {
       if (!self.name) {
         self.errors.push('Name required.');
       }
+      if (!self.surname) {
+        self.errors.push('Name required.');
+      }
       
-      axios.post('{api url}/leagues', {
-        name: this.name
+      axios.post('http://localhost:8000/api/patients', {
+        name: this.name,
+        surname: this.surname,
+        birthDate: this.birthDate
       })
       .then(function (response) {
         self.output = response.data;
@@ -82,7 +95,7 @@ export default {
               dismissible: true,
               position: "top-right"
           });
-          self.$router.push('/admin/league');
+          self.$router.push('/admin/index');
         }
       })
       .catch(function (error) {

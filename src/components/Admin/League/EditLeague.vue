@@ -10,7 +10,7 @@
                   <div class="col-lg-12">
                     <div class="p-5">
                       <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Update League</h1>
+                        <h1 class="h4 text-gray-900 mb-4">Update Patient</h1>
                       </div>
                       <form class="user" @submit="formSubmit">
                         <p v-if="errors.length">
@@ -20,7 +20,13 @@
                           </ul>
                         </p>
                         <div class="form-group">
-                          <input type="text" class="form-control form-control-user" v-model="name" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter League Name">
+                          <input type="text" class="form-control form-control-user" v-model="namePatient" aria-describedby="emailHelp" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control form-control-user" v-model="surnamePatient" aria-describedby="emailHelp" placeholder="Enter surname">
+                        </div>
+                        <div class="form-group">
+                          <input type="date" class="form-control form-control-user" v-model="birthDate" aria-describedby="emailHelp" placeholder="Enter birthdate">
                         </div>
                         <button class="btn btn-primary btn-user btn-block">Update</button>
                       </form>
@@ -51,6 +57,8 @@ export default {
   data() {
     return {
       name: "",
+      surname: "",
+      birthDate: "",
       output: "",
       errors: []
     };
@@ -58,15 +66,28 @@ export default {
   component(){
       BToast
   },
+  computed: {
+    namePatient() {
+      return this.name
+    },
+    surnamePatient() {
+      return this.surname
+    }
+  },
   methods: {
 
     getLeague() {
       let self = this;
       let id = this.$route.params.id;
       
-      axios.get('{api url}/leagues/'+id)
+      axios.get('http://localhost:8000/api/patients/'+id)
       .then(function (response) {
-        self.name = response.data[0].name;
+        console.log(response.data.data.surname)
+
+        this.name = response.data.data.name;
+        this.surname = response.data.data.surname;
+        this.birthDate = response.data.data.birthDate;
+        console.log(this.surname)
       })
       .catch(function (error) {
         self.output = error;
@@ -105,6 +126,7 @@ export default {
       });
     }
   },
+
 
   created() {
       this.getLeague();

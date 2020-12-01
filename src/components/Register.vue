@@ -24,10 +24,7 @@
 
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name" v-model="firstname">
-                  </div>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name" v-model="lastname">
+                    <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name" v-model="name">
                   </div>
                 </div>
 
@@ -35,20 +32,11 @@
                   <input class="form-control form-control-user" type="text" v-model="email" placeholder="Email">
                 </div>
                 <div class="form-group">
-                  <input class="form-control form-control-user" type="text" v-model="username" placeholder="Username">
-                </div>
-                <div class="form-group">
                   <input class="form-control form-control-user" type="password" v-model="password" placeholder="Password">
                 </div>
-                <!--<div class="file-field">
-                    <div class="btn btn-primary btn-sm float-left">
-                      <span>Choose file</span>
-                      <input type="file">
-                    </div>
-                    <div class="file-path-wrapper">
-                      <input class="file-path validate" type="text" placeholder="Upload your file">
-                    </div>
-                </div>-->
+                <div class="form-group">
+                  <input class="form-control form-control-user" type="password" v-model="passwordConfirmation" placeholder="Password confirmation">
+                </div>
 
                 <button class="btn btn-primary btn-user btn-block">Register</button>
               </form>
@@ -83,12 +71,11 @@ export default {
 
   	data() {
     	return {
-      		firstname: "",
-          lastname: "",
+          name: "",
           email: "",
-          username: "",
-      		password: "",
-      		output: "",
+          password: "",
+          passwordConfirmation: "",
+          output: "",
           errors: []
     	};
   	},
@@ -102,33 +89,28 @@ export default {
 
           this.errors = [];
 
-          if (!this.firstname) {
-              this.errors.push('Firstname required.');
-          } else if (this.firstname.length < 3 || this.firstname.length > 20) {
+          if (!this.name) {
+              this.errors.push('Name required.');
+          } else if (this.name.length < 3 || this.name.length > 20) {
               this.errors.push('Firstname length between 3 and 20.');
-          } if (!this.lastname) {
-              this.errors.push('Lastname required.');
-          } else if (this.lastname.length < 3 || this.lastname.length > 20) {
-              this.errors.push('Lastname length between 3 and 20.');
-          } if (!this.email) {
+          }  if (!this.email) {
               this.errors.push('Email required.');
           } else if (!this.validEmail(this.email)) {
               this.errors.push('Valid email required.');
-          } if (!this.username) {
-              this.errors.push('Username required.');
-          } else if (this.username.length < 3 || this.username.length > 15) {
-              this.errors.push('Lastname length between 3 and 15.');
           } if (!this.password) {
               this.errors.push('Password required.');
+          } else if(!this.passwordConfirmation) {
+              this.errors.push('Password confirmation required.');
+          } if (this.passwordConfirmation !== this.password) {
+            this.errors.push('The password confirmation is incorrect');
           }
       		
           if(!this.errors.length){
-          		axios.post('{base url}/api/register', {
-            		firstname: this.firstname,
-                lastname: this.lastname,
+          		axios.post('http://localhost:8000/api/register', {
+                name: this.name,
                 email: this.email,
-                username: this.username,
-            		password: this.password
+                password: this.password,
+                c_password: this.password
           		})
           		.then(function (response) {
                   Vue.$toast.open({

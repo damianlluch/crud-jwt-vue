@@ -20,31 +20,6 @@
           <span>Dashboard</span>
         </router-link>
       </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <li class="nav-item">
-        <router-link class="nav-link" to='/admin/league'>
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>League</span>
-        </router-link>
-      </li>
-
-      <!--<li class="nav-item">
-          <router-link class="nav-link" to='/league/list'>
-              <i class="fas fa-fw fa-chart-area"></i>
-              <span>Teams</span>
-          </router-link>
-      </li>-->
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
     </ul>
 
 </template>
