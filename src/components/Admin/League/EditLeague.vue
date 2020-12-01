@@ -20,10 +20,10 @@
                           </ul>
                         </p>
                         <div class="form-group">
-                          <input type="text" class="form-control form-control-user" v-model="namePatient" aria-describedby="emailHelp" placeholder="Enter Name">
+                          <input type="text" class="form-control form-control-user" v-model="name" aria-describedby="emailHelp" placeholder="Enter Name">
                         </div>
                         <div class="form-group">
-                          <input type="text" class="form-control form-control-user" v-model="surnamePatient" aria-describedby="emailHelp" placeholder="Enter surname">
+                          <input type="text" class="form-control form-control-user" v-model="surname" aria-describedby="emailHelp" placeholder="Enter surname">
                         </div>
                         <div class="form-group">
                           <input type="date" class="form-control form-control-user" v-model="birthDate" aria-describedby="emailHelp" placeholder="Enter birthdate">
@@ -66,14 +66,6 @@ export default {
   component(){
       BToast
   },
-  computed: {
-    namePatient() {
-      return this.name
-    },
-    surnamePatient() {
-      return this.surname
-    }
-  },
   methods: {
 
     getLeague() {
@@ -82,12 +74,9 @@ export default {
       
       axios.get('http://localhost:8000/api/patients/'+id)
       .then(function (response) {
-        console.log(response.data.data.surname)
-
         this.name = response.data.data.name;
         this.surname = response.data.data.surname;
         this.birthDate = response.data.data.birthDate;
-        console.log(this.surname)
       })
       .catch(function (error) {
         self.output = error;
@@ -104,11 +93,13 @@ export default {
           self.errors.push('Name required.');
       }
 
-      axios.put('{api url}/leagues/'+id, {
-        name: this.name
+      axios.put('http://localhost:8000/api/patients/'+id, {
+        name: this.name, surname: this.surname, birth: this.birthDate
       })
       .then(function (response) {
-          self.output = response.data;
+        this.name = response.data.data.name;
+        this.surname = response.data.data.surname;
+        this.birthDate = response.data.data.birthDate;
 
           if(response.data.code == 200){
               Vue.$toast.open({
@@ -118,7 +109,7 @@ export default {
                   dismissible: true,
                   position: "top-right"
               });
-              self.$router.push('/admin/league');
+              self.$router.push('/admin/index');
           }
       })
       .catch(function (error) {
@@ -126,7 +117,6 @@ export default {
       });
     }
   },
-
 
   created() {
       this.getLeague();

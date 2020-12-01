@@ -12,6 +12,7 @@ import Admin from './components/Admin/Admin.vue';
 import LeagueList from './components/Admin/League/LeagueList.vue';
 import CreateLeague from './components/Admin/League/CreateLeague.vue';
 import EditLeague from './components/Admin/League/EditLeague.vue';
+import DeletePatient from "./components/Admin/League/DeletePatient";
 
 const routes = [
     { path: '/', component: Home },
@@ -33,6 +34,10 @@ const routes = [
             {
                 path: 'league/edit/:id',
                 component: EditLeague
+            },
+            {
+                path: 'league/delete/:id',
+                component: DeletePatient
             }
         ],
         meta: { requiresAuth: true}

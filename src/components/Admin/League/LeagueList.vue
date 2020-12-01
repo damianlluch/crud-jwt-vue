@@ -32,6 +32,7 @@
                         <td>{{patient.surname}}</td>
                         <td>{{patient.birthdate}}</td>
                         <td><router-link :to="`/admin/league/edit/${patient.id}`">Edit</router-link></td>
+                        <td><router-link :to="`/admin/league/delete/${patient.id}`">Delete</router-link></td>
                     </tr>
                   </tbody>
                 </table>
