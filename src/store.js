@@ -16,6 +16,9 @@ export default new Vuex.Store({
     	state.token = token
     	state.user = user
   	},
+  auth_request(state, token, user){
+		  state.status = 'loading'
+	  },
   	auth_error(state){
     	state.status = 'error'
   	},
@@ -28,7 +31,7 @@ export default new Vuex.Store({
   	login({commit}, user){
     	return new Promise((resolve, reject) => {
       		commit('auth_request')
-      		axios({url: '{your host with the port}/api/login_check', data: user, method: 'POST' })
+      		axios({url: 'http://localhost:8000/api/login', params: { email: user.email, password: user.password }, method: 'POST' })
       		.then(resp => {
             console.log(resp.token);
         		const token = "Bearer "+resp.data.token

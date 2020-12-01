@@ -23,7 +23,7 @@
                 </p>
 
                 <div class="form-group">
-                  <input class="form-control form-control-user" type="text" v-model="username" placeholder="Username">
+                  <input class="form-control form-control-user" type="email" v-model="email" placeholder="Username">
                 </div>
                 <div class="form-group">
                   <input class="form-control form-control-user" v-model="password" type="password" placeholder="Password">
@@ -67,7 +67,7 @@ Vue.use(VueToast);
 export default {
 	data(){
       	return {
-        	username : "",
+          email : "",
         	password : "",
         	errors: []
       	}
@@ -78,19 +78,21 @@ export default {
     methods: {
         login: function (e) {
 
-        	let username = this.username; 
+        	let email = this.email;
             let password = this.password;
 
             this.errors = [];
-        	if (!username) {
+        	if (!email) {
               	this.errors.push('Username required.');
           	} if (!password) {
               	this.errors.push('Password required.');
           	}
 
-        	this.$store.dispatch('login', { username, password })
-            .then((res) => 
-            	this.$router.push({ path: '/admin/index' })
+        	this.$store.dispatch('login', { email, password })
+            .then((res) => {
+                      this.$router.push({ path: '/admin/index' })
+            }
+
             )
             .catch(err => 
             	console.log("NND"+err)
